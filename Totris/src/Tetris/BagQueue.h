@@ -10,8 +10,8 @@
 #define TetraminoL 3
 #define TetraminoJ 4
 #define TetraminoS 5
-#define TetraminoZ 5
-#define TetraminoNone 8
+#define TetraminoZ 6
+#define TetraminoNone 7
 
 typedef unsigned char Tetramino;
 
