@@ -15,7 +15,7 @@ void MinoRenderer::registerMino(glm::vec3 color, float x, float y) {
 	x *= 32;
 	y *= 32;
 	
-	float textureData[] = {
+	float textureData[] {
 		x, y,		0.0f, 0.0f,
 		x+32, y,	1.0f, 0.0f,
 		x+32, y+32, 1.0f, 1.0f,
@@ -25,7 +25,7 @@ void MinoRenderer::registerMino(glm::vec3 color, float x, float y) {
 	for (int i = 0; i < 4*4; i++)
 		minoTextureData.push_back(textureData[i]);
 
-	float colorData[] = {
+	float colorData[] {
 		x, y,		color.x, color.y, color.z, 0.6f,
 		x+32, y,	color.x, color.y, color.z, 0.6f,
 		x+32, y+32, color.x, color.y, color.z, 0.6f,
@@ -37,7 +37,7 @@ void MinoRenderer::registerMino(glm::vec3 color, float x, float y) {
 
 	unsigned int offset = numMinos * 4;
 
-	unsigned int indices[] = {
+	unsigned int indices[] {
 		offset+0, offset+1, offset+2,
 		offset+2, offset+3, offset+0
 	};
