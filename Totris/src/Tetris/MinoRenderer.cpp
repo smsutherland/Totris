@@ -1,16 +1,5 @@
 #include "MinoRenderer.h"
 
-const std::vector<glm::vec3> MinoRenderer::tetraminoColors = {
-	glm::vec3(1.0f, 1.0f, 0.0f), // O
-	glm::vec3(0.0f, 1.0f, 1.0f), // I
-	glm::vec3(0.5f, 0.0f, 1.0f), // T
-	glm::vec3(1.0f, 0.5f, 0.0f), // L
-	glm::vec3(0.0f, 0.0f, 1.0f), // J
-	glm::vec3(0.0f, 1.0f, 0.0f), // S
-	glm::vec3(1.0f, 0.0f, 0.0f), // Z
-	glm::vec3(0.2f, 0.2f, 0.2f)	 // Garbage
-};
-
 void MinoRenderer::registerMino(glm::vec3 color, float x, float y) {
 	x *= 32;
 	y *= 32;
@@ -98,8 +87,4 @@ void MinoRenderer::renderMinos() {
 
 		renderer.draw(vertexArray, indexBuffer, colorShader);
 	}
-}
-
-const std::vector<glm::vec3> MinoRenderer::pieceColors() {
-	return tetraminoColors;
 }
