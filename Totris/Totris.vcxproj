@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Tetris\ActivePiece.cpp" />
     <ClCompile Include="src\Tetris\BagQueue.cpp" />
     <ClCompile Include="src\Renderer\AssetManager.cpp" />
     <ClCompile Include="src\Tetris\MinoRenderer.cpp" />
@@ -307,6 +308,7 @@
     <None Include="src\vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Tetris\ActivePiece.h" />
     <ClInclude Include="src\Tetris\BagQueue.h" />
     <ClInclude Include="src\Renderer\AssetManager.h" />
     <ClInclude Include="src\Tetris\FixedSizeQueue.h" />

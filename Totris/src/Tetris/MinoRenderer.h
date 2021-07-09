@@ -24,6 +24,6 @@ public:
 	void registerMino(glm::vec3 color, float x, float y);
 	void registerMino(unsigned char tetramino, float x, float y) { registerMino(tetraminoColors[tetramino], x, y); }
 	void renderMinos();
-	static const std::vector<glm::vec3> pieceColors(unsigned char tetramino);
+	static const std::vector<glm::vec3> pieceColors();
 };
 

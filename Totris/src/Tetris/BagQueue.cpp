@@ -14,8 +14,9 @@ Tetramino BagQueue::getHold() {
 }
 
 Tetramino BagQueue::dequeue() {
-	return queue.dequeue();
+	Tetramino nextPiece = queue.dequeue();
 	addPiece();
+	return nextPiece;
 }
 
 Tetramino BagQueue::switchHold(Tetramino newHold) {
@@ -30,9 +31,9 @@ void BagQueue::fillQueue() {
 }
 
 void BagQueue::addPiece() {
-	queue.enqueue(nextBag.dequeue());
 	if (nextBag.isEmpty())
 		fillNextBag();
+	queue.enqueue(nextBag.dequeue());
 }
 
 void BagQueue::fillNextBag() {

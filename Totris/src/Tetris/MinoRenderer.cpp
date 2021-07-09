@@ -1,14 +1,14 @@
 #include "MinoRenderer.h"
 
 const std::vector<glm::vec3> MinoRenderer::tetraminoColors = {
-	glm::vec3(1.0f, 1.0f, 0.0f),
-	glm::vec3(0.0f, 1.0f, 1.0f),
-	glm::vec3(0.5f, 0.0f, 1.0f),
-	glm::vec3(1.0f, 0.5f, 0.0f),
-	glm::vec3(0.0f, 0.0f, 1.0f),
-	glm::vec3(1.0f, 0.0f, 0.0f),
-	glm::vec3(0.0f, 1.0f, 0.0f),
-	glm::vec3(0.2f, 0.2f, 0.2f)
+	glm::vec3(1.0f, 1.0f, 0.0f), // O
+	glm::vec3(0.0f, 1.0f, 1.0f), // I
+	glm::vec3(0.5f, 0.0f, 1.0f), // T
+	glm::vec3(1.0f, 0.5f, 0.0f), // L
+	glm::vec3(0.0f, 0.0f, 1.0f), // J
+	glm::vec3(0.0f, 1.0f, 0.0f), // S
+	glm::vec3(1.0f, 0.0f, 0.0f), // Z
+	glm::vec3(0.2f, 0.2f, 0.2f)	 // Garbage
 };
 
 void MinoRenderer::registerMino(glm::vec3 color, float x, float y) {
@@ -72,7 +72,7 @@ void MinoRenderer::renderMinos() {
 		textureShader.bind();
 		textureShader.setUniform1i("u_Texture", 0);
 
-		glm::mat4 projection = glm::ortho(0.0f, 640.0f, 0.0f, 480.0f, -1.0f, 1.0f);
+		glm::mat4 projection = glm::ortho(0.0f, 1080.0f, 0.0f, 720.0f, -1.0f, 1.0f);
 		textureShader.setUniformMat4f("u_MVP", projection);
 
 		renderer.draw(vertexArray, indexBuffer, textureShader);
@@ -93,13 +93,13 @@ void MinoRenderer::renderMinos() {
 		Shader colorShader("res/shaders/color.shader");
 		colorShader.bind();
 
-		glm::mat4 projection = glm::ortho(0.0f, 640.0f, 0.0f, 480.0f, -1.0f, 1.0f);
+		glm::mat4 projection = glm::ortho(0.0f, 1080.0f, 0.0f, 720.0f, -1.0f, 1.0f);
 		colorShader.setUniformMat4f("u_MVP", projection);
 
 		renderer.draw(vertexArray, indexBuffer, colorShader);
 	}
 }
 
-const std::vector<glm::vec3> MinoRenderer::pieceColors(unsigned char tetramino) {
+const std::vector<glm::vec3> MinoRenderer::pieceColors() {
 	return tetraminoColors;
 }

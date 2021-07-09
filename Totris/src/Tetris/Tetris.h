@@ -3,6 +3,7 @@
 #include "Renderer/Renderer.h"
 #include "Board.h"
 #include "BagQueue.h"
+#include "ActivePiece.h"
 
 class Tetris {
 private:
@@ -12,16 +13,22 @@ private:
 	void renderFrame();
 
 	BagQueue queue;
-	Tetramino currentTetramino;
+	ActivePiece* activePiece;
 
 	float gravity;
 
+	void setCurrentTetramino(Tetramino newCurrentTetramino);
 
 public:
 	Tetris();
 	Tetris(const Tetris& other);
 	Tetris& operator=(const Tetris& rhs);
-	~Tetris() {}
+	~Tetris() { delete activePiece; }
+
 
 	void nextFrame(float timeStep);
+
+
+	void cycleTetramino();
+	void rotate();
 };

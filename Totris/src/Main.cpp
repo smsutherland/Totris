@@ -11,7 +11,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-#include "Tetris/Board.h"
+#include "Tetris/Tetris.h"
 
 int main(void) {
 
@@ -26,7 +26,7 @@ int main(void) {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(1080, 720, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -48,15 +48,23 @@ int main(void) {
 
     Renderer renderer;
 
-    Board b;
+    Tetris game;
 
+    int i = 0;
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window)) {
         /* Render here */
         renderer.setClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
         renderer.clear();
 
-        b.render();
+        game.nextFrame(1.0f);
+        i++;
+        if (i == 120) {
+            game.cycleTetramino();
+            i = 0;
+        }
+        else if (i % 30 == 0)
+            game.rotate();
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
