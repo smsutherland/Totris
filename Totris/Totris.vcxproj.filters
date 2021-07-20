@@ -488,8 +488,7 @@
     <None Include="src\vendor\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="res\shaders\texture.shader" />
-    <None Include="res\shaders\color.shader" />
+    <None Include="res\shaders\mino.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\vendor\stb_image\stb_image.h">

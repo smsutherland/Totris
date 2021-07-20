@@ -8,12 +8,13 @@
 
 class AssetManager {
 private:
-	static std::map<std::string, Shader> shaders;
-	static std::map<std::string, Texture> textures;
+	static std::map<std::string, Shader*> shaders;
+	static std::map<std::string, Texture*> textures;
 public:
-	static Shader getShader(std::string filename);
+	static Shader* getShader(std::string filename);
 	static void removeShader(std::string filename);
-	static Texture getTexture(std::string filename);
+	static Texture* getTexture(std::string filename);
 	static void removeTexture(std::string filename);
+	static void clear();
 	virtual ~AssetManager() {}
 };

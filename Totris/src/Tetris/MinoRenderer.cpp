@@ -4,25 +4,15 @@ void MinoRenderer::registerMino(glm::vec3 color, float x, float y) {
 	x *= 32;
 	y *= 32;
 	
-	float textureData[] {
-		x, y,		0.0f, 0.0f,
-		x+32, y,	1.0f, 0.0f,
-		x+32, y+32, 1.0f, 1.0f,
-		x, y+32,	0.0f, 1.0f
+	float minoData[] {
+		x, y,			0.0f, 0.0f, color.x, color.y, color.z, 0.7f,
+		x + 32, y,		1.0f, 0.0f, color.x, color.y, color.z, 0.7f,
+		x + 32, y + 32, 1.0f, 1.0f, color.x, color.y, color.z, 0.7f,
+		x, y + 32,		0.0f, 1.0f, color.x, color.y, color.z, 0.7f
 	};
 
-	for (int i = 0; i < 4*4; i++)
-		minoTextureData.push_back(textureData[i]);
-
-	float colorData[] {
-		x, y,		color.x, color.y, color.z, 0.6f,
-		x+32, y,	color.x, color.y, color.z, 0.6f,
-		x+32, y+32, color.x, color.y, color.z, 0.6f,
-		x, y+32,	color.x, color.y, color.z, 0.6f
-	};
-
-	for (int i = 0; i < 4*6; i++)
-		minoColorData.push_back(colorData[i]);
+	for (int i = 0; i < 8*4; i++)
+		minoVertexData.push_back(minoData[i]);
 
 	unsigned int offset = numMinos * 4;
 
@@ -37,54 +27,31 @@ void MinoRenderer::registerMino(glm::vec3 color, float x, float y) {
 	numMinos++;
 }
 
-void MinoRenderer::renderMinos() {
+void MinoRenderer::renderMinos(float time) {
 	if (numMinos == 0)
 		return;
 
 	Renderer renderer;
 
-	//Draw textures
-	{
-		VertexBuffer vertexBuffer(&minoTextureData[0], minoTextureData.size() * sizeof(float));
-		VertexBufferLayout layout;
-		layout.push<float>(2);
-		layout.push<float>(2);
+	VertexBuffer vertexBuffer(&minoVertexData[0], minoVertexData.size() * sizeof(float));
+	VertexBufferLayout layout;
+	layout.push<float>(2);
+	layout.push<float>(2);
+	layout.push<float>(4);
 
-		VertexArray vertexArray;
-		vertexArray.addBuffer(vertexBuffer, layout);
+	VertexArray vertexArray;
+	vertexArray.addBuffer(vertexBuffer, layout);
 
-		IndexBuffer indexBuffer(&minoIndexData[0], minoIndexData.size());
+	IndexBuffer indexBuffer(&minoIndexData[0], minoIndexData.size());
 
-		Shader textureShader("res/shaders/texture.shader");
-		Texture texture("res/textures/discolored square.png");
-		texture.bind();
-		textureShader.bind();
-		textureShader.setUniform1i("u_Texture", 0);
+	Shader* shader = AssetManager::getShader("res/shaders/mino.shader");
+	Texture* texture = AssetManager::getTexture("res/textures/discolored square.png");
+	texture->bind();
+	shader->bind();
+	shader->setUniform1i("u_Texture", 0);
 
-		glm::mat4 projection = glm::ortho(0.0f, 1080.0f, 0.0f, 720.0f, -1.0f, 1.0f);
-		textureShader.setUniformMat4f("u_MVP", projection);
+	glm::mat4 projection = glm::ortho(0.0f, 1080.0f, 0.0f, 720.0f, -1.0f, 1.0f);
+	shader->setUniformMat4f("u_MVP", projection);
 
-		renderer.draw(vertexArray, indexBuffer, textureShader);
-	}
-
-	//Draw colors
-	{
-		VertexBuffer vertexBuffer(&minoColorData[0], minoColorData.size() * sizeof(float));
-		VertexBufferLayout layout;
-		layout.push<float>(2);
-		layout.push<float>(4);
-
-		VertexArray vertexArray;
-		vertexArray.addBuffer(vertexBuffer, layout);
-
-		IndexBuffer indexBuffer(&minoIndexData[0], minoIndexData.size());
-
-		Shader colorShader("res/shaders/color.shader");
-		colorShader.bind();
-
-		glm::mat4 projection = glm::ortho(0.0f, 1080.0f, 0.0f, 720.0f, -1.0f, 1.0f);
-		colorShader.setUniformMat4f("u_MVP", projection);
-
-		renderer.draw(vertexArray, indexBuffer, colorShader);
-	}
+	renderer.draw(vertexArray, indexBuffer, *shader);
 }

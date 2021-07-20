@@ -36,7 +36,7 @@ int main(void) {
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
-    glfwSwapInterval(1);
+    //glfwSwapInterval(1);
 
     if (glewInit() != GLEW_OK)
         std::cout << "Error!" << std::endl;
@@ -47,14 +47,27 @@ int main(void) {
     GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
     Renderer renderer;
+    renderer.setClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 
     Tetris game;
 
     int i = 0;
+    double prevTime = 0.0;
+    double currentTime = 1.0;
+
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window)) {
+
+        if (i % 120 == 0) {
+            currentTime = glfwGetTime();
+
+            std::string title = "Framerate: " + std::to_string(120/(currentTime - prevTime));
+            prevTime = currentTime;
+            glfwSetWindowTitle(window, title.c_str());
+        }
+
+
         /* Render here */
-        renderer.setClearColor(glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
         renderer.clear();
 
         game.nextFrame(1.0f);
@@ -71,6 +84,7 @@ int main(void) {
 
         /* Poll for and process events */
         glfwPollEvents();
+        //float a = ImGui::GetIO().Framerate;
 
     }
 
