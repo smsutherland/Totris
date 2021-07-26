@@ -3,6 +3,10 @@
 #include "BagQueue.h"
 #include "MinoRenderer.h"
 
+#define ROTATE_CCW 1
+#define ROTATE_ONE_EIGHTY 2
+#define ROTATE_CW 3
+
 class ActivePiece {
 protected:
 	Tetramino piece;
@@ -18,13 +22,7 @@ public:
 	virtual ~ActivePiece() = 0 {};
 
 	void render();
-	void rotate() {
-		rotationState--;
-		if (rotationState < 0) {
-			rotationState += 4;
-		}
-		rotationState = rotationState % 4;
-	}
+	void rotate(int rotation);
 };
 
 class ActivePieceO : public ActivePiece {

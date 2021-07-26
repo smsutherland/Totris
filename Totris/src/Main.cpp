@@ -51,6 +51,7 @@ int main(void) {
 
     Tetris game;
 
+
     int i = 0;
     double prevTime = 0.0;
     double currentTime = 1.0;
@@ -70,21 +71,15 @@ int main(void) {
         /* Render here */
         renderer.clear();
 
-        game.nextFrame(1.0f);
+        game.nextFrame(window, 1.0f);
         i++;
-        if (i == 120) {
-            game.cycleTetramino();
-            i = 0;
-        }
-        else if (i % 30 == 0)
-            game.rotate();
+        if (i >= 120) i = 0;
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
         /* Poll for and process events */
         glfwPollEvents();
-        //float a = ImGui::GetIO().Framerate;
 
     }
 

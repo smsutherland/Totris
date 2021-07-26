@@ -41,7 +41,7 @@ void Board::render() {
 	MinoRenderer minoRenderer;
 	for (int i = 0; i < width * (height + bufferHeight); i++) {
 		if (board[i]) {
-			minoRenderer.registerMino(glm::vec3(board[i]/1000.0f, 0.0f, 0.0f), i%width, i/width);
+			minoRenderer.registerMino(glm::vec3(board[i]/1000.0f, 0.0f, 0.0f), (float)(i%width), (float)(i/width));
 		}
 	}
 	minoRenderer.renderMinos();

@@ -26,6 +26,11 @@ void ActivePiece::rotateOffsets(float* offsets) {
 	}
 }
 
+void ActivePiece::rotate(int rotation) {
+	rotationState += rotation;
+	rotationState %= 4;
+}
+
 float* ActivePieceO::getOffsets() {
 	float offsetsStack[] = {
 		-0.5f, -0.5f,
