@@ -1,5 +1,9 @@
 #include "Tetris.h"
 
+#define CHECK_KEY(keyCode) currentButtons & (1 << keyCode) && \
+!(processedPresses & (1 << keyCode)) && \
+(processedPresses |= (1 << keyCode)) != 0
+
 Tetris::Tetris() {
 	gravity = 1.0f;
 	setCurrentTetramino(queue.dequeue());
@@ -34,23 +38,19 @@ void Tetris::nextFrame(GLFWwindow* window, float timeStep) {
 }
 
 void Tetris::computeFrame(float timeStep) {
-	if (currentButtons & (1 << CW_ROT) && !(processedPresses & (1 << CW_ROT))) {
+	if (CHECK_KEY(CW_ROT)) {
 		activePiece->rotate(ROTATE_CW);
-		processedPresses |= (1 << CW_ROT);
 	}
-	else if (currentButtons & (1 << ONE_EIGHTY_ROT) && !(processedPresses & (1 << ONE_EIGHTY_ROT))) {
+	else if (CHECK_KEY(ONE_EIGHTY_ROT)) {
 		activePiece->rotate(ROTATE_ONE_EIGHTY);
-		processedPresses |= (1 << ONE_EIGHTY_ROT);
 	}
-	else if (currentButtons & (1 << CCW_ROT) && !(processedPresses & (1 << CCW_ROT))) {
+	else if (CHECK_KEY(CCW_ROT)) {
 		activePiece->rotate(ROTATE_CCW);
-		processedPresses |= (1 << CCW_ROT);
 	}
-	if (currentButtons & (1 << HD) && !(processedPresses & (1 << HD))) {
+	if (CHECK_KEY(HD)) {
 		cycleTetramino();
-		processedPresses |= (1 << HD);
 	}
-	if (currentButtons & (1 << Hold) && !(processedPresses & (1 << Hold))) {
+	if (CHECK_KEY(Hold)) {
 		Tetramino prevHold = hold;
 		hold = activePiece->getPiece();
 		if (prevHold != TetraminoNone) {
@@ -59,7 +59,6 @@ void Tetris::computeFrame(float timeStep) {
 		else {
 			cycleTetramino();
 		}
-		processedPresses |= (1 << Hold);
 	}
 }
 
