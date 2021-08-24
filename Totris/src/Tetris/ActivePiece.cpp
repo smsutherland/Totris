@@ -26,9 +26,12 @@ void ActivePiece::rotateOffsets(float* offsets) {
 	}
 }
 
-void ActivePiece::rotate(int rotation) {
-	rotationState += rotation;
-	rotationState %= 4;
+void ActivePiece::rotate(int rotation, Board board) {
+	unsigned char testRotationState = (rotationState + rotation % 4);
+	//rotationState += rotation;
+	//rotationState %= 4;
+
+
 }
 
 float* ActivePieceO::getOffsets() {
