@@ -26,6 +26,7 @@ private:
 
 	BagQueue queue;
 	ActivePiece* activePiece;
+	Tetramino hold = TetraminoNone;
 
 	float gravity;
 	int controlScheme[8] {
@@ -42,6 +43,7 @@ private:
 	unsigned char processedPresses = 0;
 
 	void setCurrentTetramino(Tetramino newCurrentTetramino);
+	ActivePiece* createActivePiece(Tetramino pieceName);
 
 public:
 	Tetris();

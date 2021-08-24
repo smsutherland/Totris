@@ -23,6 +23,7 @@ public:
 
 	void render();
 	void rotate(int rotation);
+	Tetramino getPiece() { return piece; }
 };
 
 class ActivePieceO : public ActivePiece {

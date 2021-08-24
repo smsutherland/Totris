@@ -50,36 +50,45 @@ void Tetris::computeFrame(float timeStep) {
 		cycleTetramino();
 		processedPresses |= (1 << HD);
 	}
+	if (currentButtons & (1 << Hold) && !(processedPresses & (1 << Hold))) {
+		Tetramino prevHold = hold;
+		hold = activePiece->getPiece();
+		if (prevHold != TetraminoNone) {
+			activePiece = createActivePiece(prevHold);
+		}
+		else {
+			cycleTetramino();
+		}
+		processedPresses |= (1 << Hold);
+	}
 }
 
 void Tetris::setCurrentTetramino(Tetramino newCurrentTetramino) {
 	delete activePiece;
-	switch (newCurrentTetramino) {
+	activePiece = createActivePiece(newCurrentTetramino);
+}
+
+ActivePiece* Tetris::createActivePiece(Tetramino pieceName) {
+	switch (pieceName) {
 	case TetraminoO:
-		activePiece = new ActivePieceO();
-		break;
+		return new ActivePieceO();
 	case TetraminoI:
-		activePiece = new ActivePieceI();
-		break;
+		return new ActivePieceI();
 	case TetraminoT:
-		activePiece = new ActivePieceT();
-		break;
+		return new ActivePieceT();
 	case TetraminoL:
-		activePiece = new ActivePieceL();
-		break;
+		return new ActivePieceL();
 	case TetraminoJ:
-		activePiece = new ActivePieceJ();
-		break;
+		return new ActivePieceJ();
 	case TetraminoS:
-		activePiece = new ActivePieceS();
-		break;
+		return new ActivePieceS();
 	case TetraminoZ:
-		activePiece = new ActivePieceZ();
-		break;
+		return new ActivePieceZ();
 	case TetraminoNone:
 	default:
-		activePiece = nullptr;
+		break;
 	}
+	return nullptr;
 }
 
 void Tetris::renderFrame() {
