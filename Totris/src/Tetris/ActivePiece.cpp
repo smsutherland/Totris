@@ -16,11 +16,11 @@ void ActivePiece::render() {
 }
 
 void ActivePiece::rotateOffsets(float* offsets) {
+	auto cos = [](unsigned short rotationState) -> int { return (rotationState % 2 == 0) * (rotationState == 2 ? -1 : 1); };
+	auto sin = [](unsigned short rotationState) -> int { return (rotationState % 2 == 1) * (rotationState == 3 ? -1 : 1); };
 	for (int i = 0; i < 8; i += 2) {
 		float xOffset = offsets[i];
 		float yOffset = offsets[i + 1];
-		auto cos = [](unsigned short rotationState) -> int { return (rotationState % 2 == 0) * (rotationState == 2 ? -1 : 1); };
-		auto sin = [](unsigned short rotationState) -> int { return (rotationState % 2 == 1) * (rotationState == 3 ? -1 : 1); };
 		offsets[i] = xOffset * cos(rotationState) - yOffset * sin(rotationState);
 		offsets[i + 1] = xOffset * sin(rotationState) + yOffset * cos(rotationState);
 	}
@@ -32,6 +32,19 @@ void ActivePiece::rotate(int rotation, Board board) {
 	//rotationState %= 4;
 
 
+}
+
+float* ActivePiece::getRotationOffsets(unsigned char rotationState, int rotation) {
+	//if(rotationState == 0 && rotation == 1)
+	float offsetsStack[] = {
+	-0.5f, -0.5f,
+	 0.5f, -0.5f,
+	 0.5f,  0.5f,
+	-0.5f, 0.5f
+	};
+	float* offsets = new float[8];
+	memcpy(offsets, offsetsStack, 8 * sizeof(float));
+	return offsets;
 }
 
 float* ActivePieceO::getOffsets() {
