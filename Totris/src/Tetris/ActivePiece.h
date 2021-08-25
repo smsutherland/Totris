@@ -4,9 +4,9 @@
 #include "MinoRenderer.h"
 #include "Board.h"
 
-#define ROTATE_CCW 1
+#define ROTATE_CW 1
 #define ROTATE_ONE_EIGHTY 2
-#define ROTATE_CW 3
+#define ROTATE_CCW 3
 
 class ActivePiece {
 protected:

@@ -18,11 +18,12 @@ void ActivePiece::render() {
 void ActivePiece::rotateOffsets(float* offsets) {
 	auto cos = [](unsigned short rotationState) -> int { return (rotationState % 2 == 0) * (rotationState == 2 ? -1 : 1); };
 	auto sin = [](unsigned short rotationState) -> int { return (rotationState % 2 == 1) * (rotationState == 3 ? -1 : 1); };
+	unsigned char CCWRotationState = 4 - rotationState;
 	for (int i = 0; i < 8; i += 2) {
 		float xOffset = offsets[i];
 		float yOffset = offsets[i + 1];
-		offsets[i] = xOffset * cos(rotationState) - yOffset * sin(rotationState);
-		offsets[i + 1] = xOffset * sin(rotationState) + yOffset * cos(rotationState);
+		offsets[i] = xOffset * cos(CCWRotationState) - yOffset * sin(CCWRotationState);
+		offsets[i + 1] = xOffset * sin(CCWRotationState) + yOffset * cos(CCWRotationState);
 	}
 }
 

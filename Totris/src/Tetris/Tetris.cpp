@@ -39,13 +39,13 @@ void Tetris::nextFrame(GLFWwindow* window, float timeStep) {
 
 void Tetris::computeFrame(float timeStep) {
 	if (CHECK_KEY(CW_ROT)) {
-		activePiece->rotate(ROTATE_CW);
+		activePiece->rotate(ROTATE_CW, board);
 	}
 	else if (CHECK_KEY(ONE_EIGHTY_ROT)) {
-		activePiece->rotate(ROTATE_ONE_EIGHTY);
+		activePiece->rotate(ROTATE_ONE_EIGHTY, board);
 	}
 	else if (CHECK_KEY(CCW_ROT)) {
-		activePiece->rotate(ROTATE_CCW);
+		activePiece->rotate(ROTATE_CCW, board);
 	}
 	if (CHECK_KEY(HD)) {
 		cycleTetramino();
